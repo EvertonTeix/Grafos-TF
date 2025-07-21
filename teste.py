@@ -34,11 +34,11 @@ def ler_arquivo(filepath):
     with open(filepath, 'r') as f:
         linhas = f.readlines()
     num_vertices = int(linhas[0].strip())  # Número de vértices (1ª linha)
-    matriz = [list(map(float, linha.strip().split())) for linha in linhas[1:]]  # Lê matriz como float
+    matriz = [ast.literal_eval(linha.strip()) for linha in linhas[1:]]  # Lê matriz
     grafo = Grafo(num_vertices)
     for i in range(num_vertices):
         for j in range(num_vertices):
-            grafo.adj_matriz[i][j] = matriz[i][j]  # já é float
+            grafo.adj_matriz[i][j] = float(matriz[i][j])
     return grafo
 
 
@@ -179,21 +179,18 @@ def christofides(filepath, valor_otimo):
 # Executa o algoritmo com um arquivo de entrada e valor ótimo conhecido
 
 if __name__ == "__main__":
-    #christofides("bayg29.tsp.txt", valor_otimo=1610)
-    #christofides("si175.tsp.txt", valor_otimo=21407)
-    #christofides("exemplo_entrada.txt", valor_otimo=14)
+    #christofides("everton/Grafos-TF/testes/bayg29.tsp.txt", valor_otimo=1610)
+    #christofides("everton/Grafos-TF/testes/si175.tsp.txt", valor_otimo=21407)
+    christofides("everton/Grafos-TF/testes/exemplo_entrada.txt", valor_otimo=9)
 
-
-
-    #christofides("entradas_txt/a280.txt", valor_otimo=2579)
-    #christofides("entradas_txt/berlin52.txt", valor_otimo=7542)
-    #christofides("entradas_txt\ch130.txt", valor_otimo=6110)
-    #christofides("entradas_txt\ch150.txt", valor_otimo=6528)
-    #christofides("entradas_txt/eil51.txt", valor_otimo=426)
-    #christofides("entradas_txt/eil76.txt", valor_otimo=538)
-    #christofides("entradas_txt/eil101.txt", valor_otimo=629)
-    #christofides("entradas_txt/kroC100.txt", valor_otimo=20749)
-    #christofides("entradas_txt/kroD100.txt",21294) # OK (planilha)
-    #christofides("entradas_txt/pr1002.txt", valor_otimo=259045)
-    #christofides("entradas_txt/tsp225.txt", valor_otimo=3916)
-    
+    #christofides("everton/Grafos-TF/entradas_txt/a280.txt", valor_otimo=2579)
+    #christofides("everton/Grafos-TF/entradas_txt/berlin52.txt", valor_otimo=7542)
+    #christofides("everton/Grafos-TF/entradas_txt/ch130.txt", valor_otimo=6110)
+    #christofides("everton/Grafos-TF/entradas_txt/ch150.txt", valor_otimo=6528)
+    #christofides("everton/Grafos-TF/entradas_txt/eil51.txt", valor_otimo=426)
+    #christofides("everton/Grafos-TF/entradas_txt/eil76.txt", valor_otimo=538)
+    #christofides("everton/Grafos-TF/entradas_txt/eil101.txt", valor_otimo=629)
+    #christofides("everton/Grafos-TF/entradas_txt/kroC100.txt", valor_otimo=20749)
+    #christofides("everton/Grafos-TF/entradas_txt/kroD100.txt",21294) # OK (planilha)
+    #christofides("everton/Grafos-TF/entradas_txt/pr1002.txt", valor_otimo=259045)
+    #christofides("everton/Grafos-TF/entradas_txt/tsp225.txt", valor_otimo=3916)

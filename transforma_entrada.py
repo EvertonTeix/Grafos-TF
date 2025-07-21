@@ -35,8 +35,8 @@ def salvar_matriz_em_txt(matrix, path_out):
     with open(path_out, 'w') as f:
         f.write(str(len(matrix)) + '\n')
         for row in matrix:
-            linha = ' '.join(f"{x:.2f}" for x in row)  # 4 casas decimais de exemplo
-            f.write(linha + '\n')
+            linha = ', '.join(f"{x:.2f}" for x in row)
+            f.write(f"[{linha}]\n")
 
 def converter_todos_tsp_em_txt(pasta_tsp, pasta_saida):
     if not os.path.exists(pasta_saida):
@@ -55,6 +55,6 @@ def converter_todos_tsp_em_txt(pasta_tsp, pasta_saida):
 
 # Exemplo de uso
 if __name__ == "__main__":
-    pasta_tsp = "instancias_tsp"        # pasta onde estão as subpastas com arquivos .tsp
-    pasta_saida = "entradas_txt"        # pasta de saída para os .txt convertidos
+    pasta_tsp = "everton/Grafos-TF/instancias_tsp"        # pasta onde estão as subpastas com arquivos .tsp
+    pasta_saida = "everton/Grafos-TF/entradas_txt"        # pasta de saída para os .txt convertidos
     converter_todos_tsp_em_txt(pasta_tsp, pasta_saida)
