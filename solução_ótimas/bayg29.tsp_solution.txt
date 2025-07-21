@@ -1,0 +1,8 @@
+Árvore Geradora Mínima:
+[(0, 27, {'weight': 34.0}), (0, 23, {'weight': 52.0}), (1, 20, {'weight': 41.0}), (1, 19, {'weight': 49.0}), (2, 28, {'weight': 60.0}), (3, 14, {'weight': 34.0}), (3, 9, {'weight': 39.0}), (4, 8, {'weight': 42.0}), (4, 20, {'weight': 50.0}), (4, 5, {'weight': 51.0}), (4, 25, {'weight': 51.0}), (5, 11, {'weight': 46.0}), (5, 27, {'weight': 52.0}), (6, 24, {'weight': 72.0}), (7, 26, {'weight': 39.0}), (9, 19, {'weight': 25.0}), (9, 12, {'weight': 51.0}), (10, 21, {'weight': 63.0}), (13, 17, {'weight': 32.0}), (13, 21, {'weight': 36.0}), (14, 18, {'weight': 49.0}), (14, 17, {'weight': 56.0}), (15, 26, {'weight': 48.0}), (16, 21, {'weight': 47.0}), (18, 24, {'weight': 52.0}), (22, 26, {'weight': 74.0}), (23, 26, {'weight': 38.0}), (25, 28, {'weight': 36.0})]
+Peso da árvore geradora mínima: 1319.0
+Solução Aproximada Encontrada por Christofides:
+[0, 23, 26, 15, 7, 22, 6, 24, 18, 14, 10, 21, 16, 13, 17, 3, 9, 12, 19, 1, 20, 4, 25, 28, 2, 8, 5, 11, 27, 0]
+Peso da Solução: 1716.0
+
+Valor da Solução Ótima: 1610
