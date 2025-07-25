@@ -20,7 +20,7 @@ def tsp_to_adj_matrix(tsp_path):
     def euclidean(p1, p2):
         dx = p1[0] - p2[0]
         dy = p1[1] - p2[1]
-        return math.hypot(dx, dy)
+        return round(math.hypot(dx, dy), 6)
 
 
     n = len(coords)
@@ -35,7 +35,7 @@ def salvar_matriz_em_txt(matrix, path_out):
     with open(path_out, 'w') as f:
         f.write(str(len(matrix)) + '\n')
         for row in matrix:
-            linha = ', '.join(f"{x:.2f}" for x in row)
+            linha = ', '.join(f"{x}" for x in row)
             f.write(f"[{linha}]\n")
 
 def converter_todos_tsp_em_txt(pasta_tsp, pasta_saida):
@@ -55,6 +55,6 @@ def converter_todos_tsp_em_txt(pasta_tsp, pasta_saida):
 
 # Exemplo de uso
 if __name__ == "__main__":
-    pasta_tsp = "everton/Grafos-TF/instancias_tsp"        # pasta onde estão as subpastas com arquivos .tsp
-    pasta_saida = "everton/Grafos-TF/entradas_txt"        # pasta de saída para os .txt convertidos
+    pasta_tsp = "instancias_tsp"        # pasta onde estão as subpastas com arquivos .tsp
+    pasta_saida = "entradas_txt"        # pasta de saída para os .txt convertidos
     converter_todos_tsp_em_txt(pasta_tsp, pasta_saida)

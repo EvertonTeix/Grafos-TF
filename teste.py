@@ -41,6 +41,9 @@ def ler_arquivo(filepath):
             grafo.adj_matriz[i][j] = float(matriz[i][j])
     return grafo
 
+import heapq
+# Algoritmo de Prim para gerar a Árvore Geradora Mínima (AGM)
+import heapq
 
 # Algoritmo de Prim para gerar a Árvore Geradora Mínima (AGM)
 def prim_agm(grafo, raiz=0):
@@ -56,23 +59,29 @@ def prim_agm(grafo, raiz=0):
         # Escolhe vértice de menor key ainda não incluso
         min_key = float('inf')
         indice_min = -1
+
         for v in range(num_vertices):
             if not in_agm[v] and key[v] < min_key:
                 min_key = key[v]
                 indice_min = v
+
         in_agm[indice_min] = True  # Inclui o vértice na AGM
+
         if pai[indice_min] != -1:
             u = pai[indice_min]
             peso = grafo.get_peso(u, indice_min)
             arv_grd_min.add_aresta(u, indice_min, peso)
             arestas.append((u, indice_min, {'weight': peso}))
+            
         # Atualiza os vizinhos do vértice recém-inserido
         for v in range(num_vertices):
             peso = grafo.get_peso(indice_min, v)
             if peso > 0 and not in_agm[v] and peso < key[v]:
                 key[v] = peso
                 pai[v] = indice_min
+
     return arv_grd_min, arestas
+
 
 # Encontra os vértices de grau ímpar em um grafo
 def find_verticesGrauImpar(agm_grafo):
@@ -152,15 +161,43 @@ def calcula_custo(circuito, grafo):
 def calcula_erro_percentual(valor_aproximado, valor_otimo):
     return ((valor_aproximado - valor_otimo) / valor_otimo) * 100
 
+def compara(grafo_original, peso_agm):
+
+    G_nx = nx.Graph()
+    for u in range(grafo_original.num_vertices):
+        for v in range(u + 1, grafo_original.num_vertices):
+            peso = grafo_original.get_peso(u, v)
+            if peso != 0:
+                G_nx.add_edge(u, v, weight=peso)
+
+    # Gera a AGM com o algoritmo de Prim da NetworkX
+    agm_nx = nx.minimum_spanning_tree(G_nx, algorithm="prim")
+
+    # Calcula o custo da AGM da NetworkX
+    custo_agm_nx = round(sum(d["weight"] for _, _, d in agm_nx.edges(data=True)), 6)
+
+    # Mostra os dois custos
+    print(f"Custo da sua AGM       : {peso_agm}")
+    print(f"Custo da AGM (Prim NX) : {custo_agm_nx}")
+
+    # Compara os valores
+    if peso_agm == custo_agm_nx:
+        print("O custo da sua AGM está IGUAL.")
+    else:
+        print("O custo da sua AGM está DIFERENTE.")
+
 # Função principal: executa o algoritmo de Christofides
 def christofides(filepath, valor_otimo):
     grafo = ler_arquivo(filepath)                       # Lê o grafo a partir do arquivo
     agm, arestas_agm = prim_agm(grafo)                  # Gera a AGM
-    peso_agm = sum(attr['weight'] for (_, _, attr) in arestas_agm)
+    peso_agm = round(sum(attr['weight'] for (_, _, attr) in arestas_agm), 6)
+
 
     print("\nÁrvore Geradora Mínima:")
     print(arestas_agm)
     print("Peso da árvore geradora mínima:", peso_agm)
+
+    compara(grafo, peso_agm)
 
     impares = find_verticesGrauImpar(agm)               # Identifica vértices ímpares
     emp = min_cost_perfect_emparelha(grafo, impares)    # Gera o emparelhamento mínimo
@@ -179,18 +216,22 @@ def christofides(filepath, valor_otimo):
 # Executa o algoritmo com um arquivo de entrada e valor ótimo conhecido
 
 if __name__ == "__main__":
-    #christofides("everton/Grafos-TF/testes/bayg29.tsp.txt", valor_otimo=1610)
-    #christofides("everton/Grafos-TF/testes/si175.tsp.txt", valor_otimo=21407)
-    christofides("everton/Grafos-TF/testes/exemplo_entrada.txt", valor_otimo=9)
+    #christofides("testes/bayg29.tsp.txt", valor_otimo=1610)
+    #christofides("testes/si175.tsp.txt", valor_otimo=21407)
+    #christofides("exemplo_entrada.txt", valor_otimo=14)
 
-    #christofides("everton/Grafos-TF/entradas_txt/a280.txt", valor_otimo=2579)
-    #christofides("everton/Grafos-TF/entradas_txt/berlin52.txt", valor_otimo=7542)
-    #christofides("everton/Grafos-TF/entradas_txt/ch130.txt", valor_otimo=6110)
-    #christofides("everton/Grafos-TF/entradas_txt/ch150.txt", valor_otimo=6528)
-    #christofides("everton/Grafos-TF/entradas_txt/eil51.txt", valor_otimo=426)
-    #christofides("everton/Grafos-TF/entradas_txt/eil76.txt", valor_otimo=538)
-    #christofides("everton/Grafos-TF/entradas_txt/eil101.txt", valor_otimo=629)
-    #christofides("everton/Grafos-TF/entradas_txt/kroC100.txt", valor_otimo=20749)
-    #christofides("everton/Grafos-TF/entradas_txt/kroD100.txt",21294) # OK (planilha)
-    #christofides("everton/Grafos-TF/entradas_txt/pr1002.txt", valor_otimo=259045)
-    #christofides("everton/Grafos-TF/entradas_txt/tsp225.txt", valor_otimo=3916)
+
+    #christofides("entradas_txt/a280.txt", valor_otimo=2579) 
+    #christofides("entradas_txt/berlin52.txt", valor_otimo=7542)
+    #christofides("entradas_txt\ch130.txt", valor_otimo=6110) 
+    #christofides("entradas_txt\ch150.txt", valor_otimo=6528) 
+    #christofides("entradas_txt/eil51.txt", valor_otimo=426) 
+    #christofides("entradas_txt/eil76.txt", valor_otimo=538) 
+    #christofides("entradas_txt/eil101.txt", valor_otimo=629) 
+    #christofides("entradas_txt/kroC100.txt", valor_otimo=20749) 
+    #christofides("entradas_txt/kroD100.txt",21294) 
+    #christofides("entradas_txt/pr1002.txt", valor_otimo=259045) 
+    #christofides("entradas_txt/tsp225.txt", valor_otimo=3916)
+
+    #christofides("entradas_txt/si535.tsp(1)(1).txt", valor_otimo=48450)
+    christofides("entradas_txt/si1032.tsp(1)(1).txt", valor_otimo=92650) 
